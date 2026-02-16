@@ -101,14 +101,14 @@ Reports are exported to:
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/farming-simulator-25-stock-calculator.git
+git clone https://github.com/Kelpesito/farming-simulator-25-stock-calculator.git
 cd farming-simulator-25-stock-calculator
 ```
 
-### 2️⃣ Create virtual environment (recommended)
+### 2️⃣ Create virtual environment (recommended uv)
 
 ```bash
-python -m venv venv
+uv venv --python 3.12 --seed
 venv\Scripts\activate     # Windows
 ```
 
