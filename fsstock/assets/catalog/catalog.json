@@ -1,0 +1,775 @@
+{
+    "version": 1,
+    "products": [
+        {
+            "id": "olive",
+            "name_es": "Aceitunas",
+            "name_en": "Olive",
+            "icon": "olive.png",
+            "default_max_price_per_1000": 2170
+        },
+        {
+            "id": "cotton",
+            "name_es": "Algodón",
+            "name_en": "Cotton",
+            "icon": "cotton.png",
+            "default_max_price_per_1000": 4170
+        },
+        {
+            "id": "rice",
+            "name_es": "Arroz",
+            "name_en": "Rice",
+            "icon": "rice.png",
+            "default_max_price_per_1000": 3470
+        },
+        {
+            "id": "long_grain_rice",
+            "name_es": "Arroz de grano largo",
+            "name_en": "Long grain rice",
+            "icon": "long_grain_rice.png",
+            "default_max_price_per_1000": 1670
+        },
+        {
+            "id": "oat",
+            "name_es": "Avena",
+            "name_en": "Oat",
+            "icon": "oat.png",
+            "default_max_price_per_1000": 1930
+        },
+        {
+            "id": "sugarcane",
+            "name_es": "Caña de azúcar",
+            "name_en": "Sugarcane",
+            "icon": "sugarcane.png",
+            "default_max_price_per_1000": 370
+        },
+        {
+            "id": "barley",
+            "name_es": "Cebada",
+            "name_en": "Barley",
+            "icon": "barley.png",
+            "default_max_price_per_1000": 1140
+        },
+        {
+            "id": "parsnip",
+            "name_es": "Chirivía",
+            "name_en": "Parsnip",
+            "icon": "parsnip.png",
+            "default_max_price_per_1000": 450
+        },
+        {
+            "id": "canola",
+            "name_es": "Colza",
+            "name_en": "Canola",
+            "icon": "canola.png",
+            "default_max_price_per_1000": 2190
+        },
+        {
+            "id": "spinach",
+            "name_es": "Espinacas",
+            "name_en": "Spinach",
+            "icon": "spinach.png",
+            "default_max_price_per_1000": 690
+        },
+        {
+            "id": "sunflower",
+            "name_es": "Girasoles",
+            "name_en": "Sunflower",
+            "icon": "sunflower.png",
+            "default_max_price_per_1000": 2290
+        },
+        {
+            "id": "pea",
+            "name_es": "Guisantes",
+            "name_en": "Pea",
+            "icon": "pea.png",
+            "default_max_price_per_1000": 3430
+        },
+        {
+            "id": "grass",
+            "name_es": "Hierba",
+            "name_en": "Grass",
+            "icon": "grass.png",
+            "default_max_price_per_1000": 150
+        },
+        {
+            "id": "green_bean",
+            "name_es": "Judías verdes",
+            "name_en": "Green bean",
+            "icon": "green_bean.png",
+            "default_max_price_per_1000": 2270
+        },
+        {
+            "id": "corn",
+            "name_es": "Maíz",
+            "name_en": "Corn",
+            "icon": "corn.png",
+            "default_max_price_per_1000": 1520
+        },
+        {
+            "id": "straw",
+            "name_es": "Paja",
+            "name_en": "Straw",
+            "icon": "straw.png",
+            "default_max_price_per_1000": 150
+        },
+        {
+           "id": "potato",
+            "name_es": "Patatas",
+            "name_en": "Potato",
+            "icon": "potato.png",
+            "default_max_price_per_1000": 770 
+        },
+        {
+            "id": "beetroot",
+            "name_es": "Remolacha",
+            "name_en": "Beetroot",
+            "icon": "beetroot.png",
+            "default_max_price_per_1000": 420 
+        },
+        {
+            "id": "sugarbeet",
+            "name_es": "Remolacha azucarera",
+            "name_en": "Sugarbeet",
+            "icon": "sugarbeet.png",
+            "default_max_price_per_1000": 590
+        },
+        {
+            "id": "soybean",
+            "name_es": "Soja",
+            "name_en": "Soybean",
+            "icon": "soybean.png",
+            "default_max_price_per_1000": 3710
+        },
+        {
+            "id": "sorghum",
+            "name_es": "Sorgo",
+            "name_en": "Sorghum",
+            "icon": "sorghum.png",
+            "default_max_price_per_1000": 1570
+        },
+        {
+            "id": "wheat",
+            "name_es": "Trigo",
+            "name_en": "Wheat",
+            "icon": "wheat.png",
+            "default_max_price_per_1000": 1220
+        },
+        {
+            "id": "grape",
+            "name_es": "Uvas",
+            "name_en": "Grape",
+            "icon": "grape.png",
+            "default_max_price_per_1000": 2170
+        },
+        {
+            "id": "carrot",
+            "name_es": "Zanahorias",
+            "name_en": "Carrot",
+            "icon": "carrot.png",
+            "default_max_price_per_1000": 460
+        },
+        {
+            "id": "fertilizer",
+            "name_es": "Abono",
+            "name_en": "Fertilizer",
+            "icon": "fertilizer.png",
+            "default_max_price_per_1000": 0 
+        },
+        {
+            "id": "liquid_fertilizer",
+            "name_es": "Abono líquido",
+            "name_en": "Liquid fertilizer",
+            "icon": "liquid_fertilizer.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "rice_oil",
+            "name_es": "Aceite de arroz",
+            "name_en": "Rice oil",
+            "icon": "rice_oil.png",
+            "default_max_price_per_1000": 6410  
+        },
+        {
+            "id": "canola_oil",
+            "name_es": "Aceite de colza",
+            "name_en": "Canola oil",
+            "icon": "canola_oil.png",
+            "default_max_price_per_1000": 5950  
+        },
+        {
+            "id": "sunflower_oil",
+            "name_es": "Aceite de girasol",
+            "name_en": "Sunflower oil",
+            "icon": "sunflower_oil.png",
+            "default_max_price_per_1000": 6410  
+        },
+        {
+            "id": "olive_oil",
+            "name_es": "Aceite de oliva",
+            "name_en": "Olive oil",
+            "icon": "olive_oil.png",
+            "default_max_price_per_1000": 8780  
+        },
+        {
+            "id": "garlic",
+            "name_es": "Ajo",
+            "name_en": "Garlic",
+            "icon": "garlic.png",
+            "default_max_price_per_1000": 1530 
+        },
+        {
+            "id": "sugar",
+            "name_es": "Azúcar",
+            "name_en": "Sugar",
+            "icon": "sugar.png",
+            "default_max_price_per_1000": 1580 
+        },
+        {
+            "id": "barrel",
+            "name_es": "Barril",
+            "name_en": "Barrel",
+            "icon": "barrel.png",
+            "default_max_price_per_1000": 5340 
+        },
+        {
+            "id": "bathtub",
+            "name_es": "Bañera",
+            "name_en": "Bathtub",
+            "icon": "bathtub.png",
+            "default_max_price_per_1000": 5130 
+        },
+        {
+            "id": "rice_box",
+            "name_es": "Caja de arroz",
+            "name_en": "Rice box",
+            "icon": "rice_box.png",
+            "default_max_price_per_1000": 8190 
+        },
+        {
+            "id": "lime",
+            "name_es": "Cal",
+            "name_en": "Lime",
+            "icon": "lime.png",
+            "default_max_price_per_1000": 0 
+        },
+        {
+            "id": "spring_onion",
+            "name_es": "Cebolleta",
+            "name_en": "Spring onion",
+            "icon": "spring_onion.png",
+            "default_max_price_per_1000": 1530 
+        },
+        {
+            "id": "cereals",
+            "name_es": "Cereales",
+            "name_en": "Cereals",
+            "icon": "cereals.png",
+            "default_max_price_per_1000": 12770
+        },
+        {
+            "id": "oyster",
+            "name_es": "Champiñón ostra",
+            "name_en": "Oyster",
+            "icon": "oyster.png",
+            "default_max_price_per_1000": 2930
+        },
+        {
+            "id": "roof_plate",
+            "name_es": "Chapa de tejado",
+            "name_en": "Roof plate",
+            "icon": "roof_plate.png",
+            "default_max_price_per_1000": 4740
+        },
+        {
+            "id": "preserved_food_parsnip",
+            "name_es": "Chirivía en conserva",
+            "name_en": "Preserved food parsnip",
+            "icon": "preserved_food_parsnip.png",
+            "default_max_price_per_1000": 1680
+        },
+        {
+            "id": "chocolate",
+            "name_es": "Chocolate",
+            "name_en": "Chocolate",
+            "icon": "chocolate.png",
+            "default_max_price_per_1000": 6480
+        },
+        {
+            "id": "napa_cabbage",
+            "name_es": "Col china",
+            "name_en": "Napa cabbage",
+            "icon": "napa_cabbage.png",
+            "default_max_price_per_1000": 1190
+        },
+        {
+            "id": "sugarbeet_cut",
+            "name_es": "Corte de remolacha azucarera",
+            "name_en": "Sugarbeet cut",
+            "icon": "sugarbeet_cut.png",
+            "default_max_price_per_1000": 770
+        },
+        {
+            "id": "bucket",
+            "name_es": "Cubo",
+            "name_en": "Bucket",
+            "icon": "bucket.png",
+            "default_max_price_per_1000": 3870
+        },
+        {
+            "id": "rope",
+            "name_es": "Cuerda",
+            "name_en": "Rope",
+            "icon": "rope.png",
+            "default_max_price_per_1000": 15150
+        },
+        {
+            "id": "digestate",
+            "name_es": "Digestato",
+            "name_en": "Digestate",
+            "icon": "digestate.png",
+            "default_max_price_per_1000": 110
+        },
+        {
+            "id": "diesel",
+            "name_es": "Diésel",
+            "name_en": "Diesel",
+            "icon": "diesel.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "enoki",
+            "name_es": "Enoki",
+            "name_en": "Enoki",
+            "icon": "enoki.png",
+            "default_max_price_per_1000": 1420
+        },
+        {
+            "id": "silage",
+            "name_es": "Ensilaje",
+            "name_en": "Silage",
+            "icon": "silage.png",
+            "default_max_price_per_1000": 360
+        },
+        {
+            "id": "manure",
+            "name_es": "Estiércol",
+            "name_en": "Manure",
+            "icon": "manure.png",
+            "default_max_price_per_1000": 110
+        },
+        {
+            "id": "strawberry",
+            "name_es": "Fresas",
+            "name_en": "Strawberry",
+            "icon": "strawberry.png",
+            "default_max_price_per_1000": 1530
+        },
+        {
+            "id": "chilli_pepper",
+            "name_es": "Guindillas",
+            "name_en": "Chilli pepper",
+            "icon": "chilli_pepper.png",
+            "default_max_price_per_1000": 1530
+        },
+        {
+            "id": "canned_peas",
+            "name_es": "Guisantes en conserva",
+            "name_en": "Canned peas",
+            "icon": "canned_peas.png",
+            "default_max_price_per_1000": 7790
+        },
+        {
+            "id": "flour",
+            "name_es": "Harina",
+            "name_en": "Flour",
+            "icon": "flour.png",
+            "default_max_price_per_1000": 2500
+        },
+        {
+            "id": "rice_flour",
+            "name_es": "Harina de arroz",
+            "name_en": "Rice flour",
+            "icon": "rice_flour.png",
+            "default_max_price_per_1000": 3300
+        },
+        {
+            "id": "dry_grass",
+            "name_es": "Heno",
+            "name_en": "Dry grass",
+            "icon": "dry_grass.png",
+            "default_max_price_per_1000": 160
+        },
+        {
+            "id": "herbicide",
+            "name_es": "Herbicida",
+            "name_en": "Herbicide",
+            "icon": "herbicide.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "egg",
+            "name_es": "Huevos",
+            "name_en": "Egg",
+            "icon": "egg.png",
+            "default_max_price_per_1000": 4200
+        },
+        {
+            "id": "jarred_green_beans",
+            "name_es": "Judías verdes en frasco",
+            "name_en": "Jarred green beans",
+            "icon": "jarred_green_beans.png",
+            "default_max_price_per_1000": 5660
+        },
+        {
+            "id": "kimchi",
+            "name_es": "Kimchi",
+            "name_en": "Kimchi",
+            "icon": "kimchi.png",
+            "default_max_price_per_1000": 1950
+        },
+        {
+            "id": "cement_brick",
+            "name_es": "Ladrillos de cemento",
+            "name_en": "Cement brick",
+            "icon": "cement_brick.png",
+            "default_max_price_per_1000": 4740
+        },
+        {
+            "id": "wool",
+            "name_es": "Lana",
+            "name_en": "Wool",
+            "icon": "wool.png",
+            "default_max_price_per_1000": 3640
+        },
+        {
+            "id": "milk",
+            "name_es": "Leche",
+            "name_en": "Milk",
+            "icon": "milk.png",
+            "default_max_price_per_1000": 2290
+        },
+        {
+            "id": "milk_bottled",
+            "name_es": "Leche (embotellada)",
+            "name_en": "Milk (bottled)",
+            "icon": "milk_bottled.png",
+            "default_max_price_per_1000": 1900
+        },
+        {
+            "id": "buffalo_milk",
+            "name_es": "Leche de búfala",
+            "name_en": "Buffalo milk",
+            "icon": "buffalo_milk.png",
+            "default_max_price_per_1000": 11450
+        },
+        {
+            "id": "buffalo_milk_bottled",
+            "name_es": "Leche de búfala (embotellada)",
+            "name_en": "Buffalo milk (bottled)",
+            "icon": "buffalo_milk_bottled.png",
+            "default_max_price_per_1000": 8140
+        },
+        {
+            "id": "goat_milk",
+            "name_es": "Leche de cabra",
+            "name_en": "Goat milk",
+            "icon": "goat_milk.png",
+            "default_max_price_per_1000": 9220
+        },
+        {
+            "id": "goat_milk_bottled",
+            "name_es": "Leche de cabra (embotellada)",
+            "name_en": "Goat milk (bottled)",
+            "icon": "goat_milk_bottled.png",
+            "default_max_price_per_1000": 6900
+        },
+        {
+            "id": "lettuce",
+            "name_es": "Lechuga",
+            "name_en": "Lettuce",
+            "icon": "lettuce.png",
+            "default_max_price_per_1000": 3360
+        },
+        {
+            "id": "wood",
+            "name_es": "Madera",
+            "name_en": "Wood",
+            "icon": "wood.png",
+            "default_max_price_per_1000": 3000
+        },
+        {
+            "id": "butter",
+            "name_es": "Mantequilla",
+            "name_en": "Butter",
+            "icon": "butter.png",
+            "default_max_price_per_1000": 3660
+        },
+        {
+            "id": "honey",
+            "name_es": "Miel",
+            "name_en": "Honey",
+            "icon": "honey.png",
+            "default_max_price_per_1000": 3240
+        },
+        {
+            "id": "buffalo_mozzarella",
+            "name_es": "Mozzarella de búfala",
+            "name_en": "Buffalo mozzarella",
+            "icon": "buffalo_mozzarella.png",
+            "default_max_price_per_1000": 24530
+        },
+        {
+            "id": "furniture",
+            "name_es": "Muebles",
+            "name_en": "Furniture",
+            "icon": "furniture.png",
+            "default_max_price_per_1000": 6440
+        },
+        {
+            "id": "bread",
+            "name_es": "Pan",
+            "name_en": "Bread",
+            "icon": "bread.png",
+            "default_max_price_per_1000": 5990
+        },
+        {
+            "id": "prefab_wall",
+            "name_es": "Pared prefabricada",
+            "name_en": "Prefab wall",
+            "icon": "prefab_wall.png",
+            "default_max_price_per_1000": 14850
+        },
+        {
+            "id": "raisins",
+            "name_es": "Pasas",
+            "name_en": "Raisins",
+            "icon": "raisins.png",
+            "default_max_price_per_1000": 5430
+        },
+        {
+            "id": "potato_chips",
+            "name_es": "Patatas fritas",
+            "name_en": "Potato chips",
+            "icon": "potato_chips.png",
+            "default_max_price_per_1000": 4500
+        },
+        {
+            "id": "stones",
+            "name_es": "Piedras",
+            "name_en": "Stones",
+            "icon": "stones.png",
+            "default_max_price_per_1000": 150
+        },
+        {
+            "id": "rice_saplings",
+            "name_es": "Plantones de arroz",
+            "name_en": "Rice saplings",
+            "icon": "rice_sapling.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "slurry",
+            "name_es": "Purín",
+            "name_en": "Slurry",
+            "icon": "slurry.png",
+            "default_max_price_per_1000": 110
+        },
+        {
+            "id": "cheese",
+            "name_es": "Queso",
+            "name_en": "Cheese",
+            "icon": "cheese.png",
+            "default_max_price_per_1000": 5890
+        },
+        {
+            "id": "goat_cheese",
+            "name_es": "Queso de cabra",
+            "name_en": "Goat cheese",
+            "icon": "goat_cheese.png",
+            "default_max_price_per_1000": 5760
+        },
+        {
+            "id": "forage",
+            "name_es": "Ración mezclada",
+            "name_en": "Forage",
+            "icon": "forage.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "preserved_food_beetroot",
+            "name_es": "Remolacha en conserva",
+            "name_en": "Preserved food beetroot",
+            "icon": "preserved_food_beetroot.png",
+            "default_max_price_per_1000": 1680
+        },
+        {
+            "id": "carton_roll",
+            "name_es": "Rollo de cartón",
+            "name_en": "Carton roll",
+            "icon": "carton_roll.png",
+            "default_max_price_per_1000": 8700
+        },
+        {
+            "id": "paper_roll",
+            "name_es": "Rollo de papel",
+            "name_en": "Paper roll",
+            "icon": "paper_roll.png",
+            "default_max_price_per_1000": 9600
+        },
+        {
+            "id": "clothes",
+            "name_es": "Ropa",
+            "name_en": "Clothes",
+            "icon": "clothes.png",
+            "default_max_price_per_1000": 32900
+        },
+        {
+            "id": "rice_bag",
+            "name_es": "Saco de arroz",
+            "name_en": "Rice bag",
+            "icon": "rice_bag.png",
+            "default_max_price_per_1000": 4390
+        },
+        {
+            "id": "spinach_bag",
+            "name_es": "Saco de espinacas",
+            "name_en": "Spinach bag",
+            "icon": "spinach.png",
+            "default_max_price_per_1000": 2330
+        },
+        {
+            "id": "cement_bag",
+            "name_es": "Saco de cemento",
+            "name_en": "Cement bag",
+            "icon": "cement_bag.png",
+            "default_max_price_per_1000": 3150
+        },
+        {
+            "id": "road_salt",
+            "name_es": "Sal para carreteras",
+            "name_en": "Road salt",
+            "icon": "road_salt.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "seeds",
+            "name_es": "Semillas",
+            "name_en": "Seeds",
+            "icon": "seeds.png",
+            "default_max_price_per_1000": 0
+        },
+        {
+            "id": "parsnip_soup",
+            "name_es": "Sopa de chirivía",
+            "name_en": "Parsnip soup",
+            "icon": "parsnip_soup.png",
+            "default_max_price_per_1000": 2640
+        },
+        {
+            "id": "noodle_soup",
+            "name_es": "Sopa de fideos",
+            "name_en": "Noodle soup",
+            "icon": "noodle_soup.png",
+            "default_max_price_per_1000": 4650
+        },
+        {
+            "id": "potato_soup",
+            "name_es": "Sopa de patata",
+            "name_en": "Potato soup",
+            "icon": "triple_soup.png",
+            "default_max_price_per_1000": 3740
+        },
+        {
+            "id": "beetroot_soup",
+            "name_es": "Sopa de remolacha",
+            "name_en": "Beetroot soup",
+            "icon": "beetroot_soup.png",
+            "default_max_price_per_1000": 2540
+        },
+        {
+            "id": "carrot_soup",
+            "name_es": "Sopa de zanahoria",
+            "name_en": "Carrot soup",
+            "icon": "carrot_soup.png",
+            "default_max_price_per_1000": 2660
+        },
+        {
+            "id": "triple_soup",
+            "name_es": "Sopa triple",
+            "name_en": "Triple soup",
+            "icon": "triple_soup.png",
+            "default_max_price_per_1000": 2820
+        },
+        {
+            "id": "planks",
+            "name_es": "Tablones",
+            "name_en": "Planks",
+            "icon": "planks.png",
+            "default_max_price_per_1000": 4290
+        },
+        {
+            "id": "long_planks",
+            "name_es": "Tablones largos",
+            "name_en": "Long planks",
+            "icon": "long_planks.png",
+            "default_max_price_per_1000": 5820 
+        },
+        {
+            "id": "cake",
+            "name_es": "Tarta",
+            "name_en": "Cake",
+            "icon": "cake.png",
+            "default_max_price_per_1000": 10790 
+        },
+        {
+            "id": "fabric",
+            "name_es": "Tela",
+            "name_en": "Fabric",
+            "icon": "fabric.png",
+            "default_max_price_per_1000": 15480
+        },
+        {
+            "id": "tomato",
+            "name_es": "Tomates",
+            "name_en": "Tomato",
+            "icon": "tomato.png",
+            "default_max_price_per_1000": 1700
+        },
+        {
+            "id": "rice_rolls",
+            "name_es": "Tortitas de arroz",
+            "name_en": "Rice rolls",
+            "icon": "rice_rolls.png",
+            "default_max_price_per_1000": 4650
+        },
+        {
+            "id": "wood_beam",
+            "name_es": "Viga de madera",
+            "name_en": "Wood beam",
+            "icon": "wood_beam.png",
+            "default_max_price_per_1000": 8740
+        },
+        {
+            "id": "wood_chips",
+            "name_es": "Virutas",
+            "name_en": "Wood chips",
+            "icon": "wood_chips.png",
+            "default_max_price_per_1000": 1620
+        },
+        {
+            "id": "preserved_food_carrot",
+            "name_es": "Zanahorias en conserva",
+            "name_en": "Preserved food carrot",
+            "icon": "preserved_food_carrot.png",
+            "default_max_price_per_1000": 1740
+        },
+        {
+            "id": "grape_juice",
+            "name_es": "Zumo de uva",
+            "name_en": "Grape juice",
+            "icon": "grape_juice.png",
+            "default_max_price_per_1000": 5540
+        }
+    ]
+}

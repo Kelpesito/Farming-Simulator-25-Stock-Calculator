@@ -1,0 +1,6 @@
+BG_DARK: str = "#262626"       
+BG_DARK_2: str = "#525252"      
+PRIMARY_GREEN: str = "#88b00e" 
+WHITE: str = "#FFFDFD"
+RED: str = "#FF0000FF"
+BLACK: str  = "#000000"
