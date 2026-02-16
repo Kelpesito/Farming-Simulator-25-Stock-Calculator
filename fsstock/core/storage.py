@@ -64,7 +64,12 @@ def load_state(user_data_dir: str) -> tuple[dict[str, FarmData], str]:
     # No saved data
     if not path.exists():  
         fid: str = new_farm_id()
-        farms: dict[str, FarmData] = {fid: FarmData(name=DEFAULT_FARM_NAME)}
+        farms: dict[str, FarmData] = {fid: FarmData(
+            name=DEFAULT_FARM_NAME,
+            stock=[],
+            last_plan=None,
+            user_products=[],
+        )}
         return farms, fid
 
     # If saved data
