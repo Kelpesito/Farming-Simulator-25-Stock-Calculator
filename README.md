@@ -21,6 +21,20 @@ The application runs locally and stores your farm data in a persistent JSON file
 
 ---
 
+## ⬇️ Download (Windows .exe)
+
+If you just want to use the app (no Python needed), download the latest Windows build from **GitHub Releases**:
+
+1. Open the **latest release** page.
+2. Download the `.zip` asset (Windows build).
+3. Extract the `.zip` anywhere you want.
+4. Run `FS25 Stock Calculator.exe`.
+
+> Note: The build is not code-signed. Windows SmartScreen may show a warning.
+> If that happens: **More info** → **Run anyway**.
+
+---
+
 ## 🧠 Core Features
 
 ### 📋 Stock Management
@@ -96,7 +110,7 @@ Reports are exported to:
 
 ---
 
-## 🚀 Installation
+## 🚀 Installation (for developers)
 
 ### 1️⃣ Clone the repository
 
@@ -173,7 +187,7 @@ fsstock/
 
 - ✅ Desktop application (tested with Python 3.12.4)
 - 🔄 Language selector implemented: Two languages (English & Spanish)
-- 🪟 Windows standalone executable (.exe) — planned
+- 🪟 Windows standalone executable (.exe)
 - 📱 Android APK — planned
 
 ---
@@ -181,8 +195,8 @@ fsstock/
 ## 🌍 Future Roadmap
 
 - [x] Full language support (EN / ES)
+- [x] Windows standalone executable
 - [ ] Android APK build
-- [ ] Windows standalone executable
 
 ---
 
