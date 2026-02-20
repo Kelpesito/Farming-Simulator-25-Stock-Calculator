@@ -187,7 +187,12 @@ def load_app_settings(user_data_dir: str) -> dict[str, str]:
     p = _settings_path(user_data_dir)
     # No saved data
     if not p.exists():
-        return {"language": "es"}
+        return {
+            "version": 5,
+            "settings": {
+                "language": "es"
+            }
+        }
     
     # Saved data
     settings: dict[str, str] = json.loads(p.read_text(encoding="utf-8"))
