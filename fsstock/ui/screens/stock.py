@@ -44,7 +44,7 @@ class StockScreen(MDScreen):
         self.MODE_SORT_NAMES: dict[str, str] = {
             "added": self.app.t("stock.order.added"),
             "stock": self.app.t("stock.order.stock"),
-            "money": self.app.t("stock.order.name"),
+            "money": self.app.t("stock.order.money"),
             "name": self.app.t("stock.order.name"),
         }
         
