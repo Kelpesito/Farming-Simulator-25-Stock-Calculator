@@ -6,5 +6,5 @@ wheels/
 *.egg-info
 *.spec
 .venv
-.zip
+*.zip
 exe.txt
