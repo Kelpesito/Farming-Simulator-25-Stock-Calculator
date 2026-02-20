@@ -45,7 +45,7 @@ class ObjectiveScreen(MDScreen):
         self.root = MDBoxLayout(orientation="vertical", padding=(dp(12), dp(12)), spacing=dp(12))
 
         self.info = MDLabel(
-            text="Introduce una cuota (€) y pulsa Calcular.",
+            text=self.app.t("objective.intro"),
             halign="left",
             size_hint_y=None,
             height=dp(24)
@@ -53,7 +53,7 @@ class ObjectiveScreen(MDScreen):
         self.root.add_widget(self.info)
 
         self.target_field = MDTextField(
-            hint_text="Cuota objetivo (€)",
+            hint_text=self.app.t("objective.buttons.textfield"),
             input_filter="float",
             mode="rectangle",
             line_color_focus=PRIMARY_GREEN,
@@ -65,13 +65,13 @@ class ObjectiveScreen(MDScreen):
         # Buttons
         buttons = MDBoxLayout(size_hint_y=None, height=dp(48), spacing=dp(12))
         self.calc_btn = MDRectangleFlatButton(
-            text="Calcular",
+            text=self.app.t("objective.buttons.calculate"),
             on_release=lambda *_: self.on_calculate(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         self.apply_btn = MDRectangleFlatButton(
-            text="Aplicar plan",
+            text=self.app.t("objective.buttons.apply_plan"),
             disabled=True,
             on_release=lambda *_: self.on_apply(),
             line_color=PRIMARY_GREEN,
@@ -115,26 +115,34 @@ class ObjectiveScreen(MDScreen):
         if not plan.feasible:
             self.apply_btn.disabled = True
             self.summary.text = ""
-            self.info.text = plan.reason
+            self.info.text = self.app.t(plan.reason)
             return
         
         # If the plan is feasible
         self.apply_btn.disabled = False  # Enable apply plan button
-        self.info.text = "Plan calculado. Revisa y aplica si quieres."
+        self.info.text = self.app.t("objective.plan_info.feasible")
 
         self.summary.text = (
-            f"Viajes: {plan.total_trips} | "
-            f"Ingreso: {plan.total_revenue_eur:,.0f} € "
-            f"(objetivo: {plan.target_eur:,.0f} €)"
+            self.app.t(
+                "objective.plan.summary",
+                x=plan.total_trips,
+                y=f"{plan.total_revenue_eur:,.0f}",
+                z=f"{plan.target_eur:,.0f}"
+            )
         )
         # Build the list lines
         for line in plan.lines:
-            name: str = get_product_name(line.product_id, self.app.catalog)
+            name: str = get_product_name(line.product_id, self.app.catalog, self.app.lang)
             trips: int = line.full_trips + (1 if line.last_partial_used else 0)
 
             row = TwoLineAvatarIconListItem(
-                text=f"{name} — {trips} viaje(s) — {line.revenue_eur:,.0f} €",
-                secondary_text=f"Vender: {line.sold_l:g} L",
+                text=self.app.t(
+                    "objective.plan.item.title",
+                    x=name,
+                    y=trips,
+                    z=f"{line.revenue_eur:,.0f}"
+                ),
+                secondary_text=self.app.t("objective.plan.item.content", value=f"{line.sold_l:g}")
             )
             row.add_widget(ImageLeftWidget(source=self.app.icon_path(line.product_id)))
             self.list_view.add_widget(row)
@@ -176,7 +184,7 @@ class ObjectiveScreen(MDScreen):
         """
         self.list_view.clear_widgets()
         self.summary.text = ""
-        self.info.text = "Introduce una cuota (€) y pulsa Calcular."
+        self.info.text = self.app.t("objective.intro")
         self.apply_btn.disabled = True
         
     # =============================================================================================
@@ -207,7 +215,7 @@ class ObjectiveScreen(MDScreen):
                 total_revenue_eur=0.0,
                 total_trips=0,
                 lines=[],
-                reason="No se ha seleccionado plan",
+                reason=self.app.t("objective.plan_info.no_plan"),
             )
 
         # Optimization products: StockEntry -> OptProduct
@@ -255,7 +263,7 @@ class ObjectiveScreen(MDScreen):
         """
         # If there is no plan
         if not self.app.last_plan:
-            return False, "No hay plan para aplicar."
+            return False, self.app.t("objective.apply_plan.non_feasible")
 
         plan: TripPlan | None = self.app.last_plan
         for line in plan.lines:
@@ -271,5 +279,5 @@ class ObjectiveScreen(MDScreen):
         self.app.last_plan = None
         self.app._save_state()
         self.app.go("stock")
-        return True, "Plan aplicado: stock actualizado."
+        return True, self.app.t("objective.apply_plan.feasible")
     

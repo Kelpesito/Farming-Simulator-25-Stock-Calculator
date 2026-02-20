@@ -11,7 +11,7 @@ from .new_farm_id import new_farm_id
 # Constants
 # =================================================================================================
 
-DATA_VERSION = 4
+DATA_VERSION = 5
 DEFAULT_FARM_NAME = "Mi granja"
 
 # =================================================================================================
@@ -38,6 +38,25 @@ def _data_path(user_data_dir: str) -> Path:
     d.mkdir(parents=True, exist_ok=True)
     return d / "fs_stock_state.json"
 
+def _settings_path(user_data_dir: str) -> Path:
+    """
+    Creates the settings save file json (if it does not exist) and
+    returns the file name.
+    
+    Parameters
+    ----------
+    user_data_dir: str
+        Directory to save data files
+        
+    Returns
+    -------
+    Path: 
+        .json file where to save the settings app
+    """
+    d = Path(user_data_dir)
+    d.mkdir(parents=True, exist_ok=True)
+    return d / "fs_stock_settings.json"
+    
 # =================================================================================================
 # Main loader and saver
 # =================================================================================================
@@ -122,3 +141,55 @@ def save_state(user_data_dir: str, farms: dict[str, FarmData], current_farm_id: 
     tmp: Path = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     os.replace(tmp, path)
+    
+# =================================================================================================
+# Save / load settings
+# =================================================================================================
+    
+def save_app_settings(user_data_dir: str, settings: dict[str, str]) -> None:
+    """
+    Save the settings.
+    
+    Parameters
+    ----------
+    user_data_dir: str
+        Directory to save data files
+    settings: dict[str, str]
+        Settings dictionary containing the following fields:
+        - language: str
+            The app language
+    """
+    p: Path = _settings_path(user_data_dir)
+    
+    payload: dict[str, Any] = {
+        "version": DATA_VERSION,
+        "settings": settings,
+    }
+    
+    p.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    
+def load_app_settings(user_data_dir: str) -> dict[str, str]:
+    """
+    Load settings app.
+    
+    Parameters
+    ----------
+    user_data_dir: str
+        Directory to save data files
+    
+    Returns
+    -------
+    settings: dict[str, str]
+        Settings dictionary containing the following fields:
+        - language: str
+            The app language
+    """
+    p = _settings_path(user_data_dir)
+    # No saved data
+    if not p.exists():
+        return {"language": "es"}
+    
+    # Saved data
+    settings: dict[str, str] = json.loads(p.read_text(encoding="utf-8"))
+    return  settings
+

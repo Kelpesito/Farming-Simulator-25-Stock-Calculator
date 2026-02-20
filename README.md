@@ -115,7 +115,7 @@ venv\Scripts\activate     # Windows
 ### 3️⃣ Install dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ---
@@ -135,7 +135,8 @@ fsstock/
 │
 ├── assets/
 │   ├── catalog/catalog.json        # Base products information
-│   └── icons/                      # Icons (.png)
+│   ├── icons/                      # Icons (.png)
+|   └── i18n/                       # Language dictionaries                    
 │
 ├── core/
 │   ├── optimizer.py                # Minimize number of trips, maximizing revenue
@@ -147,14 +148,15 @@ fsstock/
 │   ├── get_product_name.py         # Get product name given the product ID
 |   ├── money_value.py              # Get money value of a product, in €/L
 |   ├── new_farm_id.py              # Generate a random ID for a new farm
-|   ├── paths.py                    # Give the important path locations 
+|   ├── paths.py                    # Give the important path locations
+|   └── i18n.py                     # Loads the language dictionary
 |
 ├── ui/
 │   ├── screens/
 |   |   ├── add_product.py          # Screen to add a product into stock
 |   |   ├── objective.py            # Screen to calculate the optimal trip plan
 |   |   ├── settings.py             # Settings screen (to extract report, change farm, language...)   
-|   |   ├── stock.py                # Main screen: stock list
+|   |   └── stock.py                # Main screen: stock list
 |   |
 │   ├── widgets/navigation_bar.py   # Botton navigation bar
 |   ├── colors/colors.py            # Colors list (hex)    
@@ -170,15 +172,15 @@ fsstock/
 ## 📌 Current Status
 
 - ✅ Desktop application (tested with Python 3.12.4)
-- 🔄 Language selector exists but is not fully implemented yet
-- 📱 Android APK — planned
+- 🔄 Language selector implemented: Two languages (English & Spanish)
 - 🪟 Windows standalone executable (.exe) — planned
+- 📱 Android APK — planned
 
 ---
 
 ## 🌍 Future Roadmap
 
-- [ ] Full language support (EN / ES)
+- [x] Full language support (EN / ES)
 - [ ] Android APK build
 - [ ] Windows standalone executable
 
@@ -189,7 +191,8 @@ fsstock/
 All farm data is saved locally in:
 
 ```
-<user_data_dir>/fs_stock_state.json
+- <user_data_dir>/fs_stock_state.json
+- <user_data_dir>/fs_stock_settings.json
 ```
 
 Each farm stores:

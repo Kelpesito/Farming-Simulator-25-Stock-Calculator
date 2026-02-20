@@ -50,7 +50,7 @@ class AddProductScreen(MDScreen):
             spacing=dp(12),
         )
         self.search = MDTextField(
-            hint_text="Buscar producto...",
+            hint_text=self.app.t("add_product.textfield"),
             mode="rectangle",
             line_color_focus=PRIMARY_GREEN,
             hint_text_color_focus=PRIMARY_GREEN,
@@ -109,7 +109,7 @@ class AddProductScreen(MDScreen):
         self.list_view.clear_widgets()
         # Add back only the items that match the search
         for prod in self._catalog_values():
-            name: str = prod.name_es
+            name: str = prod.name_es if self.app.lang == "es" else prod.name_en
             if term and term not in name.lower():
                 continue
 
@@ -161,7 +161,7 @@ class AddProductScreen(MDScreen):
 
         """
         item = OneLineAvatarIconListItem(
-            text=prod.name_es,
+            text=prod.name_es if self.app.lang == "es" else prod.name_en,
             on_release = lambda *_: self.select_catalog_product(prod.id))
 
         # Icon in cache
@@ -226,7 +226,7 @@ class AddProductScreen(MDScreen):
 
         # Text field: price
         self.app._price_field = MDTextField(
-            hint_text="Precio máx (€/1000L)",
+            hint_text=self.app.t("add_product.edit.max_price"),
             input_filter="float",
             mode="rectangle",
             text=str(prod.default_max_price_per_1000 or 0),
@@ -244,20 +244,23 @@ class AddProductScreen(MDScreen):
 
         # Buttons dialog
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: self.app._dialog.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         add_btn = MDRectangleFlatButton(
-            text="Añadir",
+            text=self.app.t("buttons.add"),
             on_release=lambda *_: self.confirm_add_from_catalog(),
             md_bg_color=PRIMARY_GREEN,
             line_color=PRIMARY_GREEN,
             text_color = BLACK
         )
         self.app._dialog = MDDialog(
-            title=f"Precio máx: {prod.name_es}",
+            title=self.app.t(
+                "add_product.edit.title",
+                value=prod.name_es if self.app.lang == "es" else prod.name_en
+            ),
             type="custom",
             content_cls=content,
             size_hint=(0.92, None),

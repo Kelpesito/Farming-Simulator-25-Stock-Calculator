@@ -56,3 +56,14 @@ def custom_icon_path() -> Path:
         Custom item icon
     """
     return icons_dir() / "custom.png"
+
+def i18n_dir() -> Path:
+    """
+    Returns the i18n path: fsstock/assets/i18n
+    
+    Returns
+    -------
+    Path:
+        Catalog .json path
+    """
+    return assets_dir() / "i18n"

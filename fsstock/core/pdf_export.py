@@ -12,6 +12,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle, StyleSheet
 from reportlab.lib.units import mm
 
 from .get_product_name import get_product_name
+from .i18n import I18N
 from .models import CatalogProduct, StockEntry, TripPlan
 from .money_value import money_value
 
@@ -62,6 +63,7 @@ def export_pdf_report(
     user_data_dir: str,
     catalog: dict[str, CatalogProduct],
     stock: list[StockEntry],
+    i18n: I18N,
     last_plan: TripPlan | None = None,
     *,
     filename: str | None = None,
@@ -82,6 +84,8 @@ def export_pdf_report(
         Catalog of all items
     stock: list[StockEntry]
         List of all the items in stock
+    i18n: I18N
+        Dictionary containing text in language
     last_plan: TripPlan | None (optional)
         Trip plan, if exists
     filename: str | None (optional)
@@ -139,10 +143,10 @@ def export_pdf_report(
     doc = SimpleDocTemplate(
         str(out_path),
         pagesize=A4,
-        leftMargin=14 * mm,
-        rightMargin=14 * mm,
-        topMargin=14 * mm,
-        bottomMargin=14 * mm,
+        leftMargin=10 * mm,
+        rightMargin=10 * mm,
+        topMargin=10 * mm,
+        bottomMargin=10 * mm,
         title=title,
     )
 
@@ -157,23 +161,23 @@ def export_pdf_report(
     
     # Subtitle
     dt_str: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    story.append(Paragraph(f"Generado: {dt_str}", meta))
+    story.append(Paragraph(f"{i18n.t("pdf.subtitle.generated")} {dt_str}", meta))
     if farm_name:
-        story.append(Paragraph(f"Granja: <b>{farm_name}</b>", meta))
+        story.append(Paragraph(f"{i18n.t("pdf.subtitle.farm")} <b>{farm_name}</b>", meta))
     story.append(Spacer(1, 10))
 
     # -------- Stock table --------
-    story.append(Paragraph("Stock actual", h2))
+    story.append(Paragraph(i18n.t("pdf.stock.title"), h2))
 
     # Header table
     data: list[list[str]] = [[
-        "Producto",
-        "Cantidad\n(L)",
-        "Precio máx\n(€/1000L)",
-        "Valor\n(€)",
-        "Cap/viaje\n(L)",
-        "Mínimo\n(L)",
-        "Vendible",
+        i18n.t("pdf.product"),
+        i18n.t("pdf.quantity"),
+        i18n.t("pdf.max_price"),
+        i18n.t("pdf.value"),
+        i18n.t("pdf.capacity"),
+        i18n.t("pdf.min_stock"),
+        i18n.t("pdf.sellable"),
     ]]
 
     total_value: float = 0.0
@@ -190,17 +194,17 @@ def export_pdf_report(
         total_value += val
 
         data.append([
-            get_product_name(e.product_id, catalog),
+            get_product_name(e.product_id, catalog, i18n.lang),
             _fmt_int(e.qty_l),
             _fmt_int(e.max_price_per_1000),
             _fmt_int(val),
             _fmt_int(e.cap_per_trip_l),
             _fmt_int(e.min_keep_l),
-            "Sí" if e.enabled_for_optimization else "No",
+            i18n.t("pdf.yes") if e.enabled_for_optimization else i18n.t("pdf.no"),
         ])
 
     # Totals
-    story.append(Paragraph(f"<b>Valor total:</b> {_fmt_int(total_value)} €", normal))
+    story.append(Paragraph(f"<b>{i18n.t("pdf.stock.total")}</b> {_fmt_int(total_value)} €", normal))
     story.append(Spacer(1, 6))
 
     # Table
@@ -227,30 +231,30 @@ def export_pdf_report(
 
     # -------- Objective plan section (optional) --------
     if last_plan:
-        story.append(Paragraph("Plan de objetivo", h2))
+        story.append(Paragraph(i18n.t("pdf.plan.title"), h2))
         story.append(Paragraph(
-            f"<b>Objetivo:</b> {_fmt_int(last_plan.target_eur)} € &nbsp;&nbsp; "
-            f"<b>Viajes:</b> {last_plan.total_trips} &nbsp;&nbsp; "
-            f"<b>Ingreso estimado:</b> {_fmt_int(last_plan.total_revenue_eur)} €",
+            f"<b>{i18n.t("pdf.plan.objective")}</b> {_fmt_int(last_plan.target_eur)} € &nbsp;&nbsp; "
+            f"<b>{i18n.t("pdf.plan.trips")}</b> {last_plan.total_trips} &nbsp;&nbsp; "
+            f"<b>{i18n.t("pdf.plan.revenue")}</b> {_fmt_int(last_plan.total_revenue_eur)} €",
             normal,
         ))
         story.append(Spacer(1, 6))
 
         data2: list[list[str]] = [[
-            "Producto",
-            "Viajes",
-            "Cap/viaje\n(L)",
-            "Viaje extra\n(L)",
-            "Vender\n(L)",
-            "Ingreso\n(€)",
-            "Stock restante\n(L)",
+            i18n.t("pdf.product"),
+            i18n.t("pdf.trips"),
+            i18n.t("pdf.capacity"),
+            i18n.t("pdf.extra_trip"),
+            i18n.t("pdf.sell"),
+            i18n.t("pdf.revenue"),
+            i18n.t("pdf.remaining"),
         ]]
 
         # Current stock
         stock_map: dict[str, StockEntry] = {e.product_id: e for e in stock}
 
         for ln in last_plan.lines:
-            name: str = get_product_name(ln.product_id, catalog)
+            name: str = get_product_name(ln.product_id, catalog, i18n.lang)
 
             e: StockEntry = stock_map[ln.product_id]
             current_qty: float = e.qty_l if e else 0.0

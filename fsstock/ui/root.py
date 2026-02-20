@@ -70,10 +70,10 @@ class RootLayout(MDBoxLayout):
         self.objective_screen = ObjectiveScreen(app, name="objective")
         self.settings_screen = SettingsScreen(app, name="settings")
         self.screen_titles = {
-            "stock": "Stock",
-            "add_product": "Añadir producto",
-            "objective": "Objetivo",
-            "settings": "Ajustes",
+            "stock": self.app.t("titles.stock"),
+            "add_product": self.app.t("titles.add_product"),
+            "objective": self.app.t("titles.objective"),
+            "settings": self.app.t("titles.settings"),
         }
 
         self.sm.add_widget(self.stock_screen)
@@ -174,7 +174,7 @@ class RootLayout(MDBoxLayout):
         """
         # Textfields
         name_field = MDTextField(
-            hint_text="Nombre del producto",
+            hint_text=self.app.t("create_product.product_name"),
             mode="rectangle",
             text=prefill_name,
             line_color_focus=PRIMARY_GREEN,
@@ -182,7 +182,7 @@ class RootLayout(MDBoxLayout):
             text_color_focus=PRIMARY_GREEN,
         )
         price_field = MDTextField(
-            hint_text="Precio máx (€/1000L)",
+            hint_text=self.app.t("create_product.max_price"),
             mode="rectangle",
             input_filter="float",
             text="0",
@@ -202,20 +202,20 @@ class RootLayout(MDBoxLayout):
 
         # Buttons 
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *a: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN,
         )
         create_btn = MDRectangleFlatButton(
-            text="Crear",
+            text=self.app.t("buttons.create"),
             on_release=lambda *_: self.create_custom_product(name_field, price_field, dlg),
             md_bg_color=PRIMARY_GREEN,
             line_color=PRIMARY_GREEN,
             text_color=BLACK
         )
         dlg = MDDialog(
-            title="Añadir producto manual",
+            title=self.app.t("create_product.title"),
             type="custom",
             content_cls=content,
             size_hint=(0.92, None),

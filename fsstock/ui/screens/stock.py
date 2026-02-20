@@ -22,14 +22,6 @@ from fsstock.ui.colors.colors import BG_DARK, BLACK, PRIMARY_GREEN, RED, WHITE
 
 if TYPE_CHECKING:
     from fsstock.ui.app import FSStockApp
-    
-    
-MODE_SORT_NAMES: dict[str, str] = {
-    "added": "Añadido",
-    "stock": "Stock",
-    "money": "Dinero",
-    "name": "Nombre",
-}
 
 
 class StockScreen(MDScreen):
@@ -48,6 +40,13 @@ class StockScreen(MDScreen):
     def __init__(self, app: FSStockApp, **kwargs) -> None:
         super().__init__(**kwargs)
         self.app: FSStockApp = app
+        
+        self.MODE_SORT_NAMES: dict[str, str] = {
+            "added": self.app.t("stock.order.added"),
+            "stock": self.app.t("stock.order.stock"),
+            "money": self.app.t("stock.order.name"),
+            "name": self.app.t("stock.order.name"),
+        }
         
         self.md_bg_color: str = BG_DARK  # Background color
 
@@ -76,7 +75,7 @@ class StockScreen(MDScreen):
         )
         # Total (1 línea + ellipsis si hace falta)
         self.total_label = MDLabel(
-            text="Total: 0 €",
+            text=f"{self.app.t("stock.total")} 0 €",
             halign="left",
             valign="middle",
             font_style="H6",
@@ -102,7 +101,7 @@ class StockScreen(MDScreen):
         self.sort_area.add_widget(self.sort_btn)
 
         self.sort_label = MDLabel(
-            text="Añadido (desc.)",
+            text=f"{self.app.t("stock.order.added")} (desc.)",
             halign="left",
             valign="middle",
             size_hint=(None, 1),
@@ -137,14 +136,38 @@ class StockScreen(MDScreen):
         Builds the sort menu.
         """
         items: list[dict[str, Any]] = [
-            self._sort_menu_item("Añadido (primero - último)", "added", True),
-            self._sort_menu_item("Añadido (último - primero)", "added", False),
-            self._sort_menu_item("Stock (menor - mayor)", "stock", True),
-            self._sort_menu_item("Stock (mayor - menor)", "stock", False),
-            self._sort_menu_item("Dinero (menor - mayor)", "money", True),
-            self._sort_menu_item("Dinero (mayor - menor)", "money", False),
-            self._sort_menu_item("Nombre (A - Z)", "name", True),
-            self._sort_menu_item("Nombre (Z - A)", "name", False),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.added")} {self.app.t("stock.order.added.asc")}",
+                "added",
+                True
+            ),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.added")} {self.app.t("stock.order.added.desc")}",
+                "added",
+                False
+            ),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.stock")} {self.app.t("stock.order.asc")}",
+                "stock",
+                True
+            ),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.stock")} {self.app.t("stock.order.desc")}",
+                "stock",
+                False
+            ),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.money")} {self.app.t("stock.order.asc")}",
+                "money",
+                True
+            ),
+            self._sort_menu_item(
+                f"{self.app.t("stock.order.money")} {self.app.t("stock.order.desc")}",
+                "money",
+                False
+            ),
+            self._sort_menu_item(f"{self.app.t("stock.order.name")} (A - Z)", "name", True),
+            self._sort_menu_item(f"{self.app.t("stock.order.name")} (Z - A)", "name", False),
         ]
         self._sort_menu = MDDropdownMenu(
             caller=self.sort_btn,
@@ -259,7 +282,7 @@ class StockScreen(MDScreen):
         self.sort_mode = mode
         self.sort_ascending = ascending
         
-        mode_name: str = MODE_SORT_NAMES[mode]
+        mode_name: str = self.MODE_SORT_NAMES[mode]
 
         order = "asc." if ascending else "desc."
         self.sort_label.text = f"{mode_name} ({order})"
@@ -297,7 +320,7 @@ class StockScreen(MDScreen):
         # Sort according to alphabetic order
         if self.sort_mode == "name":
             entries.sort(
-                key=lambda x: get_product_name(x.product_id, self.app.catalog),
+                key=lambda x: get_product_name(x.product_id, self.app.catalog, self.app.lang),
                 reverse=not self.sort_ascending
             )
             return entries
@@ -319,11 +342,14 @@ class StockScreen(MDScreen):
         """
         # Title
         self.app._edit_entry = entry
-        title: str = f"Editar: {get_product_name(entry.product_id, self.app.catalog)}"
+        title: str = self.app.t(
+            "edit.title",
+            value=get_product_name(entry.product_id, self.app.catalog, self.app.lang)
+        )
 
         # Textfields
         self.app._qty_field = MDTextField(
-            hint_text="Cantidad (L)",
+            hint_text=self.app.t("edit.quantity"),
             input_filter="float",
             mode="rectangle",
             text=str(entry.qty_l),
@@ -332,7 +358,7 @@ class StockScreen(MDScreen):
             text_color_focus=PRIMARY_GREEN,
         )
         self.app._price_field = MDTextField(
-            hint_text="Precio máx (€/1000L)",
+            hint_text=self.app.t("edit.max_price"),
             input_filter="float",
             mode="rectangle",
             text=str(entry.max_price_per_1000),
@@ -341,7 +367,7 @@ class StockScreen(MDScreen):
             text_color_focus=PRIMARY_GREEN,
         )
         self.app._cap_field = MDTextField(
-            hint_text="Capacidad por viaje (L)",
+            hint_text=self.app.t("edit.capacity_per_trip"),
             input_filter="float",
             mode="rectangle",
             text=str(entry.cap_per_trip_l),
@@ -350,7 +376,7 @@ class StockScreen(MDScreen):
             text_color_focus=PRIMARY_GREEN,
         )
         self.app._min_keep_field = MDTextField(
-            hint_text="Stock mínimo a mantener (L)",
+            hint_text=self.app.t("edit.min_keep_stock"),
             input_filter="float",
             mode="rectangle",
             text=str(entry.min_keep_l),
@@ -366,7 +392,10 @@ class StockScreen(MDScreen):
             spacing=dp(12),
             padding=(0, dp(6)),
         )
-        toggle_row.add_widget(MDLabel(text="Usar en optimización", halign="left"))
+        toggle_row.add_widget(MDLabel(
+            text=self.app.t("edit.enable_for_optimization"),
+            halign="left"
+        ))
 
         self.app._enabled_toggle = MDCheckbox(
             active=bool(entry.enabled_for_optimization),
@@ -390,20 +419,20 @@ class StockScreen(MDScreen):
 
         # Buttons
         delete_btn = MDRectangleFlatButton(
-            text="Eliminar",
+            text=self.app.t("buttons.delete"),
             on_release=lambda *_: self._ask_delete_current(),
             md_bg_color=RED,
             line_color=RED,
             text_color=WHITE
         )
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: self.app._dialog.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         save_btn = MDRectangleFlatButton(
-            text="Guardar",
+            text=self.app.t("buttons.save"),
             on_release=lambda *_: self._confirm_edit(),
             md_bg_color=PRIMARY_GREEN,
             line_color=PRIMARY_GREEN,
@@ -455,24 +484,28 @@ class StockScreen(MDScreen):
         Ask to confirm delete of an item in stock
         """
         self.app._dialog.dismiss()
-        name: str = get_product_name(self.app._edit_entry.product_id, self.app.catalog)
+        name: str = get_product_name(
+            self.app._edit_entry.product_id,
+            self.app.catalog,
+            self.app.lang
+        )
 
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: self.app._confirm_dialog.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         delete_btn = MDRectangleFlatButton(
-            text="Eliminar",
+            text=self.app.t("buttons.delete"),
             on_release=lambda *_: self._delete_current(),
             md_bg_color=RED,
             line_color=RED,
             text_color=WHITE
         )
         self.app._confirm_dialog = MDDialog(
-            title="Eliminar del stock",
-            text=f"¿Seguro que quieres eliminar '{name}' del stock?",
+            title=self.app.t("stock.delete.title"),
+            text=self.app.t("stock.delete.content", value=name),
             buttons=[cancel_btn, delete_btn],
         )
         self.app._confirm_dialog.open()
@@ -529,7 +562,7 @@ class StockScreen(MDScreen):
             total += self._update_row_labels(row, entry)
             self.list_view.add_widget(row)
 
-        self.total_label.text = f"Total: {total:,.0f} €"
+        self.total_label.text = f"{self.app.t("stock.total")} {total:,.0f} €"
         self._relayout_top_row()
     
     def _update_row_labels(self, row: TwoLineAvatarIconListItem, entry: StockEntry) -> float:
@@ -550,15 +583,17 @@ class StockScreen(MDScreen):
             The money value of the product (€)
         """
         prod: CatalogProduct = self.app.catalog[entry.product_id]
-        name: str = prod.name_es if prod else entry.product_id
+        name: str = prod.name_es if self.app.lang == "es" else prod.name_en
 
         val: float = money_value(entry.qty_l, entry.max_price_per_1000)
 
         row.text = f"{name}  —  {val:,.0f} €"
-        row.secondary_text = (
-            f"Qty: {entry.qty_l:,.0f} L | "
-            f"Máx: {entry.max_price_per_1000:g} €/1000L"
+        row.secondary_text = self.app.t(
+            "stock.item",
+            x=f"{entry.qty_l:,.0f}",
+            y=f"{entry.max_price_per_1000:g}"
         )
+        
         return val
     
     # =============================================================================================

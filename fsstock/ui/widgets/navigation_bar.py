@@ -116,9 +116,9 @@ class BottomNavigationBar(MDBoxLayout):
         self.app: FSStockApp = app
         self._items: dict[str, BottomNavItem] = {}
 
-        self._add("stock", "warehouse", "Stock")
-        self._add("objective", "target", "Objetivo")
-        self._add("settings", "cog-outline", "Ajustes")
+        self._add("stock", "warehouse", "titles.stock")
+        self._add("objective", "target", "titles.objective")
+        self._add("settings", "cog-outline", "titles.settings")
 
         self.set_active("stock")
 
@@ -135,7 +135,7 @@ class BottomNavigationBar(MDBoxLayout):
         text: str
             Title screen
         """
-        item = BottomNavItem(key, icon, text, on_select=self._on_item)
+        item = BottomNavItem(key, icon, self.app.t(text), on_select=self._on_item)
         self._items[key] = item
         self.add_widget(item)
 

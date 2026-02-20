@@ -2,9 +2,10 @@ from kivy.clock import Clock
 from kivymd.app import MDApp
 
 from fsstock.core.catalog import load_catalog
+from fsstock.core.i18n import I18N
 from fsstock.core.models import CatalogProduct, StockEntry, TripPlan, FarmData
 from fsstock.core.paths import icons_dir, custom_icon_path
-from fsstock.core.storage import load_state, save_state
+from fsstock.core.storage import load_app_settings, load_state, save_state
 
 from .root import RootLayout
 from .screens.add_product import AddProductScreen
@@ -45,6 +46,11 @@ class FSStockApp(MDApp):
         
         # Dark theme style: black background + white text
         self.theme_cls.theme_style = "Dark"
+        
+        # Load settings and language
+        settings = load_app_settings(self.user_data_dir)
+        self.lang: str = settings["settings"]["language"]
+        self._load_i18n()
         
         # Load catalog 
         self.catalog: dict[str, CatalogProduct] = load_catalog()
@@ -209,6 +215,14 @@ class FSStockApp(MDApp):
         
         if screen_name == "settings":
             self.root_widget.settings_screen.refresh()
+    
+    # =============================================================================================
+    # Language
+    # =============================================================================================
+    
+    def _load_i18n(self):
+        self.i18n = I18N(self.lang)
+        self.t = self.i18n.t
     
     # =============================================================================================
     # Stop

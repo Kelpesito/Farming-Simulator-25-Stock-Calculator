@@ -20,11 +20,17 @@ from kivymd.uix.textfield import MDTextField
 
 from fsstock.core.models import FarmData, TripPlan
 from fsstock.core.pdf_export import export_pdf_report
-from fsstock.core.storage import new_farm_id
+from fsstock.core.storage import new_farm_id, save_app_settings
 from fsstock.ui.colors.colors import BG_DARK, BLACK, PRIMARY_GREEN, RED, WHITE
 
 if TYPE_CHECKING:
     from fsstock.ui.app import FSStockApp
+
+
+LANGUAGE_OPTIONS = [
+    ("es", "Español"),
+    ("en", "English"),
+]
 
 
 class SettingsScreen(MDScreen):
@@ -59,7 +65,7 @@ class SettingsScreen(MDScreen):
         )
         # Farm name
         self.farm_label = MDLabel(
-            text="Granja: —",
+            text=f"{self.app.t("settings.farm_name")} —",
             halign="left",
             font_style="H6",
             size_hint_y=None,
@@ -82,24 +88,32 @@ class SettingsScreen(MDScreen):
         self.list_view.clear_widgets()
 
         # Report section
-        self._add_section("Reportes")
-        self._add_item("Exportar reporte a PDF", "file-pdf-box", self.on_export_pdf)
+        self._add_section(self.app.t("settings.titles.report"))
+        self._add_item(self.app.t("settings.buttons.report"), "file-pdf-box", self.on_export_pdf)
 
         # Farm section
-        self._add_section("Granja")
-        self._add_item("Crear granja", "plus-box", self.on_create_farm)
-        self._add_item("Cambiar granja", "swap-horizontal", self.on_switch_farm)
-        self._add_item("Cambiar nombre de la granja", "pencil", self.on_rename_farm)
-        self._add_item("Reiniciar datos de la granja", "restart", self.on_reset_farm)
-        self._add_item("Eliminar granja", "trash-can-outline", self.on_delete_farm)
+        self._add_section(self.app.t("settings.titles.farm"))
+        self._add_item(self.app.t("settings.buttons.create_farm"), "plus-box", self.on_create_farm)
+        self._add_item(
+            self.app.t("settings.buttons.change_farm"),
+            "swap-horizontal",
+            self.on_switch_farm
+        )
+        self._add_item(self.app.t("settings.buttons.rename_farm"), "pencil", self.on_rename_farm)
+        self._add_item(self.app.t("settings.buttons.reset_farm"), "restart", self.on_reset_farm)
+        self._add_item(
+            self.app.t("settings.buttons.delete_farm"),
+            "trash-can-outline",
+            self.on_delete_farm
+        )
 
         # Languaje section
-        self._add_section("Idioma")
-        self._add_item("Idioma (ES/EN)", "translate", self.on_language)
+        self._add_section(self.app.t("settings.titles.language"))
+        self._add_item(self.app.t("settings.buttons.language"), "translate", self.on_language)
 
         # About section
-        self._add_section("Acerca de")
-        self._add_item("Acerca de", "information-outline", self.on_about)
+        self._add_section(self.app.t("settings.titles.about"))
+        self._add_item(self.app.t("settings.buttons.about"), "information-outline", self.on_about)
         
     def _add_section(self, title: str) -> None:
         """
@@ -146,8 +160,8 @@ class SettingsScreen(MDScreen):
         
         # Generating report dialog...
         progress = MDDialog(
-            title="Exportar PDF",
-            text="Generando reporte...",
+            title=self.app.t("pdf.generating.title"),
+            text=self.app.t("pdf.generating.content"),
         )
         progress.open()
         
@@ -171,6 +185,7 @@ class SettingsScreen(MDScreen):
                 user_data_dir=self.app.user_data_dir,
                 catalog=self.app.catalog,
                 stock=self.app.stock,
+                i18n=self.app.i18n,
                 last_plan=plan,
                 title="FS Stock Report",
                 farm_name=self.app.farm_name,
@@ -224,17 +239,17 @@ class SettingsScreen(MDScreen):
         pdf_path: Path
             The output PDF path
         """
-        txt: str = f"PDF creado correctamente.\n\nRuta:\n{pdf_path}"
+        txt: str = self.app.t("pdf.success.content", value=pdf_path)
 
         # Buttons
         close_btn = MDRectangleFlatButton(
-            text="Cerrar",
+            text=self.app.t("buttons.close"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         copy_btn = MDRectangleFlatButton(
-            text="Copiar ruta",
+            text=self.app.t("buttons.copy_path"),
             on_release=lambda *_: Clipboard.copy(str(pdf_path)),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
@@ -243,14 +258,14 @@ class SettingsScreen(MDScreen):
 
         if platform == "win":
             open_btn = MDRectangleFlatButton(
-                text="Abrir PDF",
+                text=self.app.t("buttons.open_pdf"),
                 on_release=lambda *_: self._open_path_native(pdf_path),
                 line_color=PRIMARY_GREEN,
                 text_color=BLACK,
                 md_bg_color=PRIMARY_GREEN
             )
             open_folder_btn = MDRectangleFlatButton(
-                text="Abrir carpeta",
+                text=self.app.t("buttons.open_folder"),
                 on_release=lambda *_: self._open_path_native(pdf_path.parent),
                 line_color=PRIMARY_GREEN,
                 text_color=PRIMARY_GREEN
@@ -258,7 +273,7 @@ class SettingsScreen(MDScreen):
             buttons.insert(1, open_btn)
             buttons.insert(2, open_folder_btn)
 
-        dlg = MDDialog(title="Reporte PDF", text=txt, buttons=buttons)
+        dlg = MDDialog(title=self.app.t("pdf.success.title"), text=txt, buttons=buttons)
         dlg.open()
         
     def _open_path_native(self, path: Path) -> None:
@@ -288,14 +303,14 @@ class SettingsScreen(MDScreen):
             The error message
         """
         close_btn = MDRectangleFlatButton(
-            text="Cerrar",
+            text=self.app.t("buttons.close"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         dlg = MDDialog(
-            title="Error al exportar",
-            text=f"No se pudo generar el PDF.\n\nDetalle:\n{err}",
+            title=self.app.t("pdf.error.title"),
+            text=self.app.t("pdf.error.content", value=err),
             buttons=[close_btn],
         )
         dlg.open()
@@ -309,7 +324,7 @@ class SettingsScreen(MDScreen):
         Creates a new farm
         """
         field = MDTextField(
-            hint_text="Nombre de la nueva granja",
+            hint_text=self.app.t("new_farm.textfield"),
             mode="rectangle",
             text="",
             line_color_focus=PRIMARY_GREEN,
@@ -325,20 +340,20 @@ class SettingsScreen(MDScreen):
         content.add_widget(field)
 
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         create_btn = MDRectangleFlatButton(
-            text="Crear",
+            text=self.app.t("buttons.create"),
             on_release=lambda *_: self._do_create_farm(field, dlg),
             line_color=PRIMARY_GREEN,
             md_bg_color=PRIMARY_GREEN, 
             text_color=BLACK
         )
         dlg = MDDialog(
-            title="Crear granja",
+            title=self.app.t("new_farm.title"),
             type="custom",
             content_cls=content,
             size_hint=(0.92, None),
@@ -388,7 +403,7 @@ class SettingsScreen(MDScreen):
 
         # Dialog change farm
         title_lbl = MDLabel(
-            text="Selecciona una granja",
+            text=self.app.t("change_farm.content"),
             halign="left",
             size_hint_y=None,
             height=dp(28),
@@ -435,20 +450,20 @@ class SettingsScreen(MDScreen):
 
         # Dialog buttons
         create_btn = MDRectangleFlatButton(
-            text="Crear",
+            text=self.app.t("buttons.create"),
             on_release=lambda *_: self._create_farm_from_here(dlg),
             line_color=PRIMARY_GREEN,
             md_bg_color=PRIMARY_GREEN,
             text_color=BLACK
         )
         cancel_btn = MDRectangleFlatButton(
-            text="Cerrar",
+            text=self.app.t("buttons.close"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         dlg = MDDialog(
-            title="Cambiar granja",
+            title=self.app.t("change_farm.title"),
             type="custom",
             content_cls=content,
             size_hint=(0.92, None),
@@ -485,14 +500,13 @@ class SettingsScreen(MDScreen):
     # =============================================================================================
     # Rename farm
     # =============================================================================================
-        
     
     def on_rename_farm(self) -> None:
         """
         Changes the farm name
         """
         field = MDTextField(
-            hint_text="Nombre de la granja",
+            hint_text=self.app.t("rename_farm.textfield"),
             mode="rectangle",
             text=self.app.farm_name or "",
             line_color_focus=PRIMARY_GREEN,
@@ -509,20 +523,20 @@ class SettingsScreen(MDScreen):
 
         # Buttons
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         save_btn = MDRectangleFlatButton(
-            text="Guardar",
+            text=self.app.t("buttons.save"),
             on_release=lambda *_: self._do_save_farmname(field, dlg),
             md_bg_color=PRIMARY_GREEN,
             line_color=PRIMARY_GREEN,
             text_color=BLACK
         )
         dlg = MDDialog(
-            title="Cambiar nombre",
+            title=self.app.t("rename_farm.title"),
             type="custom",
             content_cls=content,
             size_hint=(0.92, None),
@@ -550,21 +564,21 @@ class SettingsScreen(MDScreen):
         Reset farm
         """
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN
         )
         delete_btn = MDRectangleFlatButton(
-            text="Reiniciar",
+            text=self.app.t("buttons.reset"),
             on_release=lambda *_: self._do_reset_farm(dlg),
             md_bg_color=RED,
             line_color=RED,
             text_color=WHITE
         )
         dlg = MDDialog(
-            title="Reiniciar datos",
-            text="Se borrará el stock y cualquier plan guardado de ESTA granja.\n\n¿Continuar?",
+            title=self.app.t("reset_farm.title"),
+            text=self.app.t("reset_farm.content"),
             buttons=[cancel_btn, delete_btn],
         )
         dlg.open()
@@ -588,21 +602,21 @@ class SettingsScreen(MDScreen):
         Delete farm
         """
         cancel_btn = MDRectangleFlatButton(
-            text="Cancelar",
+            text=self.app.t("buttons.cancel"),
             on_release=lambda *_: dlg.dismiss(),
             line_color=PRIMARY_GREEN,
             text_color=PRIMARY_GREEN,
             )
         delete_btn = MDRectangleFlatButton(
-            text="Eliminar",
+            text=self.app.t("buttons.delete"),
             on_release=lambda *_: self._do_delete_farm(dlg),
             md_bg_color=RED,
             line_color=RED,
             text_color=WHITE
         )
         dlg = MDDialog(
-            title="Eliminar granja",
-            text="Se eliminará ESTA granja y todos sus datos.\n\n¿Seguro?",
+            title=self.app.t("delete_farm.title"),
+            text=self.app.t("delete_farm.content"),
             buttons=[cancel_btn, delete_btn],
         )
         dlg.open()
@@ -637,14 +651,124 @@ class SettingsScreen(MDScreen):
     # Language
     # =============================================================================================
     
-    def on_language(self):
-        pass
+    def on_language(self) -> None:
+        """
+        Change the language.
+        """
+        # Dialog        
+        title_lbl = MDLabel(
+            text=self.app.t("language.content"),
+            halign="left",
+            size_hint_y=None,
+            height=dp(28),
+        )
+
+        scroll = MDScrollView(size_hint_y=None, height=dp(340))
+        lst = MDList()
+        lst.size_hint_y = None
+        lst.bind(minimum_height=lst.setter("height"))
+        scroll.add_widget(lst)
+
+        content = MDBoxLayout(
+            orientation="vertical",
+            padding=(dp(12), dp(12)),
+            spacing=dp(8),
+            size_hint_y=None,
+            height=dp(390),
+        )
+        content.add_widget(title_lbl)
+        content.add_widget(scroll)
+
+        # Buttons
+        for code, label in LANGUAGE_OPTIONS:
+            item = OneLineAvatarIconListItem(
+                text=label,
+                on_release=lambda *a, c=code: self._pick_language(c, dlg)
+            )
+            icon: str = "check-circle" if code == getattr(self.app, "lang", "es") else "circle-outline"
+            item.add_widget(IconLeftWidget(
+                icon=icon,
+                on_release=lambda *a, c=code: self._pick_language(c, dlg)
+            ))
+            lst.add_widget(item)
+
+        close_btn = MDRectangleFlatButton(
+            text=self.app.t("buttons.close"),
+            on_release=lambda *a: dlg.dismiss(),
+            line_color=PRIMARY_GREEN,
+            text_color=PRIMARY_GREEN,
+        )
+        dlg = MDDialog(
+            title="Idioma / Language",
+            type="custom",
+            content_cls=content,
+            size_hint=(0.92, None),
+            height=dp(320),
+            buttons=[close_btn],
+        )
+        dlg.open()
+        
+    def _pick_language(self, lang_code: str, dlg: MDDialog) -> None:
+        """
+        Selects and sets a language.
+        
+        Parameters
+        ----------
+        lang_code: str
+            The language code ("es", "en")
+        dlg: MDDialog
+            The language change dialog
+        """
+        self._set_language(lang_code)
+        dlg.dismiss()
+
+
+    def _set_language(self, lang_code: str) -> None:
+        """
+        Sets the language
+        """
+        self.app.lang = lang_code
+        save_app_settings(self.app.user_data_dir, {"language": self.app.lang})
+
+        # Recarga traductor + refresca UI visible
+        self.app._load_i18n()
+        self._apply_language()
+
+
+    def _apply_language(self) -> None:
+        """
+        Apply the language, refreshing the screens
+        """
+        # Refresh navigation bar
+        for key, item in self.app.root_widget.bottom_nav._items.items():
+            item.label.text = self.app.t(f"titles.{key}")
+            
+        # Refresh screen titles
+        self.app.root_widget.screen_titles = {
+            "stock": self.app.t("titles.stock"),
+            "add_product": self.app.t("titles.add_product"),
+            "objective": self.app.t("titles.objective"),
+            "settings": self.app.t("titles.settings"),
+        }
+
+        # Recreate the screeens
+        self.__init__(self.app, name="settings")
+        self.app.root_widget.stock_screen.__init__(self.app, name="stock")
+        self.app.root_widget.objective_screen.__init__(self.app, name="objective")
+        self.app.root_widget.add_screen.__init__(self.app, name="add_product")
+
+        # Preload catalog screen
+        Clock.schedule_once(self.app._preload_add_product_screen, 0)
+        
+        # Refresh settings screen
+        self.refresh()
+
     
     # =============================================================================================
     # About
     # =============================================================================================
 
-    def on_about(self):
+    def on_about(self) -> None:
         """
         Go to github page
         """
@@ -667,4 +791,4 @@ class SettingsScreen(MDScreen):
         Updates the farm name in settings screen
         """
         name: str = self.app.farm_name
-        self.farm_label.text = f"Granja: {name}"
+        self.farm_label.text = f"{self.app.t("settings.farm_name")} {name}"

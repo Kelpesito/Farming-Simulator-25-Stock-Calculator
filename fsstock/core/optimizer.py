@@ -301,7 +301,7 @@ def optimize_min_trips(products: list[OptProduct], target_eur: float) -> TripPla
             total_revenue_eur=0.0,
             total_trips=0,
             lines=[],
-            reason="No se ha seleccionado plan")
+            reason="objective.plan_info.no_plan")
 
     # Initial state of products
     st: dict[str, dict] = _init_state(products)
@@ -313,7 +313,7 @@ def optimize_min_trips(products: list[OptProduct], target_eur: float) -> TripPla
             total_revenue_eur=0.0,
             total_trips=0,
             lines=[],
-            reason="No hay productos elegibles (enabled / mínimos / capacidad).",
+            reason="objective.plan_info.no_products",
         )
 
     # Minimize number of trips -> optimal number of trips K
@@ -327,7 +327,7 @@ def optimize_min_trips(products: list[OptProduct], target_eur: float) -> TripPla
             total_revenue_eur=max_all,
             total_trips=0,
             lines=[],
-            reason="No hay stock vendible suficiente para alcanzar la cuota.",
+            reason="objective.plan_info.not_reached_quota",
         )
 
     total: float = 0.0  # Total revenue
