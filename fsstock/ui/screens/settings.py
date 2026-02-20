@@ -25,6 +25,11 @@ from fsstock.ui.colors.colors import BG_DARK, BLACK, PRIMARY_GREEN, RED, WHITE
 
 if TYPE_CHECKING:
     from fsstock.ui.app import FSStockApp
+    
+if platform == "win":
+    import os
+if platform == "android":
+    from androidstorage4kivy import SharedStorage, ShareSheet
 
 
 LANGUAGE_OPTIONS = [
@@ -287,7 +292,6 @@ class SettingsScreen(MDScreen):
         """
         try:
             if platform == "win":
-                import os
                 os.startfile(str(path))
         except Exception as e:
             self._show_pdf_error(str(e))
