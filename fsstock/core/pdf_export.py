@@ -161,9 +161,9 @@ def export_pdf_report(
     
     # Subtitle
     dt_str: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    story.append(Paragraph(f"{i18n.t("pdf.subtitle.generated")} {dt_str}", meta))
+    story.append(Paragraph(f"{i18n.t('pdf.subtitle.generated')} {dt_str}", meta))
     if farm_name:
-        story.append(Paragraph(f"{i18n.t("pdf.subtitle.farm")} <b>{farm_name}</b>", meta))
+        story.append(Paragraph(f"{i18n.t('pdf.subtitle.farm')} <b>{farm_name}</b>", meta))
     story.append(Spacer(1, 10))
 
     # -------- Stock table --------
@@ -204,7 +204,7 @@ def export_pdf_report(
         ])
 
     # Totals
-    story.append(Paragraph(f"<b>{i18n.t("pdf.stock.total")}</b> {_fmt_int(total_value)} €", normal))
+    story.append(Paragraph(f"<b>{i18n.t('pdf.stock.total')}</b> {_fmt_int(total_value)} €", normal))
     story.append(Spacer(1, 6))
 
     # Table

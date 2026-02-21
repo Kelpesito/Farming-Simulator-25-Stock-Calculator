@@ -70,7 +70,7 @@ class SettingsScreen(MDScreen):
         )
         # Farm name
         self.farm_label = MDLabel(
-            text=f"{self.app.t("settings.farm_name")} —",
+            text=f"{self.app.t('settings.farm_name')} —",
             halign="left",
             font_style="H6",
             size_hint_y=None,
@@ -796,7 +796,7 @@ class SettingsScreen(MDScreen):
         Updates the farm name in settings screen
         """
         name: str = self.app.farm_name
-        self.farm_label.text = f"{self.app.t("settings.farm_name")} {name}"
+        self.farm_label.text = f"{self.app.t('settings.farm_name')} {name}"
     
     # =============================================================================================
     # Android implementation

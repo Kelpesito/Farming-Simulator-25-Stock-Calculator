@@ -75,7 +75,7 @@ class StockScreen(MDScreen):
         )
         # Total (1 línea + ellipsis si hace falta)
         self.total_label = MDLabel(
-            text=f"{self.app.t("stock.total")} 0 €",
+            text=f"{self.app.t('stock.total')} 0 €",
             halign="left",
             valign="middle",
             font_style="H6",
@@ -101,7 +101,7 @@ class StockScreen(MDScreen):
         self.sort_area.add_widget(self.sort_btn)
 
         self.sort_label = MDLabel(
-            text=f"{self.app.t("stock.order.added")} (desc.)",
+            text=f"{self.app.t('stock.order.added')} (desc.)",
             halign="left",
             valign="middle",
             size_hint=(None, 1),
@@ -137,37 +137,37 @@ class StockScreen(MDScreen):
         """
         items: list[dict[str, Any]] = [
             self._sort_menu_item(
-                f"{self.app.t("stock.order.added")} {self.app.t("stock.order.added.asc")}",
+                f"{self.app.t('stock.order.added')} {self.app.t('stock.order.added.asc')}",
                 "added",
                 True
             ),
             self._sort_menu_item(
-                f"{self.app.t("stock.order.added")} {self.app.t("stock.order.added.desc")}",
+                f"{self.app.t('stock.order.added')} {self.app.t('stock.order.added.desc')}",
                 "added",
                 False
             ),
             self._sort_menu_item(
-                f"{self.app.t("stock.order.stock")} {self.app.t("stock.order.asc")}",
+                f"{self.app.t('stock.order.stock')} {self.app.t('stock.order.asc')}",
                 "stock",
                 True
             ),
             self._sort_menu_item(
-                f"{self.app.t("stock.order.stock")} {self.app.t("stock.order.desc")}",
+                f"{self.app.t('stock.order.stock')} {self.app.t('stock.order.desc')}",
                 "stock",
                 False
             ),
             self._sort_menu_item(
-                f"{self.app.t("stock.order.money")} {self.app.t("stock.order.asc")}",
+                f"{self.app.t('stock.order.money')} {self.app.t('stock.order.asc')}",
                 "money",
                 True
             ),
             self._sort_menu_item(
-                f"{self.app.t("stock.order.money")} {self.app.t("stock.order.desc")}",
+                f"{self.app.t('stock.order.money')} {self.app.t('stock.order.desc')}",
                 "money",
                 False
             ),
-            self._sort_menu_item(f"{self.app.t("stock.order.name")} (A - Z)", "name", True),
-            self._sort_menu_item(f"{self.app.t("stock.order.name")} (Z - A)", "name", False),
+            self._sort_menu_item(f"{self.app.t('stock.order.name')} (A - Z)", "name", True),
+            self._sort_menu_item(f"{self.app.t('stock.order.name')} (Z - A)", "name", False),
         ]
         self._sort_menu = MDDropdownMenu(
             caller=self.sort_btn,
@@ -562,7 +562,7 @@ class StockScreen(MDScreen):
             total += self._update_row_labels(row, entry)
             self.list_view.add_widget(row)
 
-        self.total_label.text = f"{self.app.t("stock.total")} {total:,.0f} €"
+        self.total_label.text = f"{self.app.t('stock.total')} {total:,.0f} €"
         self._relayout_top_row()
     
     def _update_row_labels(self, row: TwoLineAvatarIconListItem, entry: StockEntry) -> float:
