@@ -233,9 +233,9 @@ def export_pdf_report(
     if last_plan:
         story.append(Paragraph(i18n.t("pdf.plan.title"), h2))
         story.append(Paragraph(
-            f"<b>{i18n.t("pdf.plan.objective")}</b> {_fmt_int(last_plan.target_eur)} € &nbsp;&nbsp; "
-            f"<b>{i18n.t("pdf.plan.trips")}</b> {last_plan.total_trips} &nbsp;&nbsp; "
-            f"<b>{i18n.t("pdf.plan.revenue")}</b> {_fmt_int(last_plan.total_revenue_eur)} €",
+            f"<b>{i18n.t('pdf.plan.objective')}</b> {_fmt_int(last_plan.target_eur)} € &nbsp;&nbsp; "
+            f"<b>{i18n.t('pdf.plan.trips')}</b> {last_plan.total_trips} &nbsp;&nbsp; "
+            f"<b>{i18n.t('pdf.plan.revenue')}</b> {_fmt_int(last_plan.total_revenue_eur)} €",
             normal,
         ))
         story.append(Spacer(1, 6))
