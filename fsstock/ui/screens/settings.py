@@ -293,7 +293,7 @@ class SettingsScreen(MDScreen):
             if platform == "win":
                 os.startfile(str(path))
             elif platform == "android":
-                self._open_pdf_android(self, path)
+                self._open_pdf_android(path)
         except Exception as e:
             self._show_pdf_error(str(e))
     
