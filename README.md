@@ -188,7 +188,7 @@ fsstock/
 - ✅ Desktop application (tested with Python 3.12.4)
 - 🔄 Language selector implemented: Two languages (English & Spanish)
 - 🪟 Windows standalone executable (.exe)
-- 📱 Android APK — planned
+- 📱 Android APK 
 
 ---
 
@@ -196,7 +196,7 @@ fsstock/
 
 - [x] Full language support (EN / ES)
 - [x] Windows standalone executable
-- [ ] Android APK build
+- [x] Android APK build
 
 ---
 
