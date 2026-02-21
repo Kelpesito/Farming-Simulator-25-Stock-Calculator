@@ -261,22 +261,21 @@ class SettingsScreen(MDScreen):
         ) 
         buttons: list[MDRectangleFlatButton] = [close_btn, copy_btn]
 
-        if platform == "win":
-            open_btn = MDRectangleFlatButton(
-                text=self.app.t("buttons.open_pdf"),
-                on_release=lambda *_: self._open_path_native(pdf_path),
-                line_color=PRIMARY_GREEN,
-                text_color=BLACK,
-                md_bg_color=PRIMARY_GREEN
-            )
-            open_folder_btn = MDRectangleFlatButton(
-                text=self.app.t("buttons.open_folder"),
-                on_release=lambda *_: self._open_path_native(pdf_path.parent),
-                line_color=PRIMARY_GREEN,
-                text_color=PRIMARY_GREEN
-            )
-            buttons.insert(1, open_btn)
-            buttons.insert(2, open_folder_btn)
+        open_btn = MDRectangleFlatButton(
+            text=self.app.t("buttons.open_pdf"),
+            on_release=lambda *_: self._open_path_native(pdf_path),
+            line_color=PRIMARY_GREEN,
+            text_color=BLACK,
+            md_bg_color=PRIMARY_GREEN
+        )
+        open_folder_btn = MDRectangleFlatButton(
+            text=self.app.t("buttons.open_folder"),
+            on_release=lambda *_: self._open_path_native(pdf_path.parent),
+            line_color=PRIMARY_GREEN,
+            text_color=PRIMARY_GREEN
+        )
+        buttons.insert(1, open_btn)
+        buttons.insert(2, open_folder_btn)
 
         dlg = MDDialog(title=self.app.t("pdf.success.title"), text=txt, buttons=buttons)
         dlg.open()
@@ -293,6 +292,8 @@ class SettingsScreen(MDScreen):
         try:
             if platform == "win":
                 os.startfile(str(path))
+            elif platform == "android":
+                self._open_pdf_android(self, path)
         except Exception as e:
             self._show_pdf_error(str(e))
     
@@ -796,3 +797,29 @@ class SettingsScreen(MDScreen):
         """
         name: str = self.app.farm_name
         self.farm_label.text = f"{self.app.t("settings.farm_name")} {name}"
+    
+    # =============================================================================================
+    # Android implementation
+    # =============================================================================================
+
+    def _open_pdf_android(self, pdf_path: Path) -> None:
+        """
+        Copy the PDF to shared storage (Documents) and open it with the
+        default app.
+        
+        Parameters
+        ----------
+        pdf_path: Path
+            The pdf path
+        """
+        try:
+            ss = SharedStorage()
+            shared_file = ss.copy_to_shared(
+                private_file=str(pdf_path),
+                collection="DIRECTORY_DOCUMENTS",
+                filepath=f"FSStock/{pdf_path.name}",
+            )
+            ShareSheet().view_file(shared_file)
+        except Exception as e:
+            self._show_pdf_error(str(e))
+            
